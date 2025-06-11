@@ -24,7 +24,7 @@ func AnalyzeURL(rawURL string) (*analysisresult.AnalysisResult, int, error) {
 		logs.Log.Error("Invalid URL")
 		return nil, http.StatusBadRequest, errors.New("invalid url")
 	}
-
+	// set time out value to 5 sec
 	client := &http.Client{Timeout: 5 * time.Second}
 
 	resp, err := client.Get(parsedURL.String())
@@ -74,7 +74,7 @@ func AnalyzeURL(rawURL string) (*analysisresult.AnalysisResult, int, error) {
 	return result, http.StatusCreated, nil
 }
 
-// calculate number of hheadings
+// calculate number of headings
 func calcNumOfHeadings(result *analysisresult.AnalysisResult, doc *goquery.Document) {
 	logs.Log.Info("Calculating number of headings")
 	const numberOfHeadings = 6

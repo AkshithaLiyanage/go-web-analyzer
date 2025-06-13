@@ -34,7 +34,7 @@ func AnalyzeHandler(res http.ResponseWriter, req *http.Request) {
 
 	analysisResult, httpCode, err := analyzer.AnalyzeURL(url)
 	if err != nil {
-		logs.Log.Error(err)
+		logs.Log.Error("Error Analysing URL : ", err)
 		writeJSONError(res, err.Error(), httpCode)
 		return
 	}

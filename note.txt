@@ -1,0 +1,40 @@
+Main Steps for Building and Deploying the Solution
+1. Clone the Repository
+git clone https://github.com/AkshithaLiyanage/go-web-analyzer.git
+cd go-web-analyzer
+
+2. Install Dependencies
+
+go mod tidy
+
+3. Run Locally
+
+go run cmd/server/main.go
+
+4. Run in docker
+    
+Build Docker Image - 
+    sudo docker build -t go-web-analyzer .
+Run Docker Container - 
+    sudo docker run -p 8080:8080 -p 6060:6060 go-web-analyzer
+
+
+Assumptions and decisions
+
+1. Assumed single-container deployment; no orchestration or cloud configuration included.
+2. The backend expects multipart/form-data format for POST requests to /analyze and assume that requirement not stricly expect json requests.
+3. Based on the presence of known <!DOCTYPE> declarations in the HTML string, not guaranteed to cover all available or malformed cases.
+4. Identifies login forms based on common patterns like username, password, login button.
+5. Set time out value as 8 sec, assuming it is enough for this system to determine urls connectivity.
+6. Grouped various connectivity errors (DNS, TLS, timeouts) into high-level user-friendly HTTP status responses (e.g., 502 Bad Gateway, 504 Gateway Timeout) 
+and if the error mapping is not available assume it is a 502 Bad Gateway .
+
+Possible improvements to the project
+
+1. Better UI/UX on the frontend.
+2. Deploy to Kubernetes with proper monitoring stack (Prometheus + Grafana)
+3. Integrate CI/CD pipeline
+4. Add support for concurrent URL analyzing
+5. Implement caching for repeated analysis of the same URL
+6. Add authentication
+7. Support for JSON API

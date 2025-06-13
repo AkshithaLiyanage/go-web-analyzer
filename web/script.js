@@ -58,15 +58,30 @@ document.getElementById("analyze-form").addEventListener("submit", async functio
   }
 });
 
-  function renderLinksSection(title, links) {
-    if (Array.isArray(links) && links.length > 0) {
-      let html = `<h3>${title} (${links.length})</h3><ul>`;
-      links.forEach(link => {
-        html += `<li><a href="${link}" target="_blank">${link}</a></li>`;
-      });
-      html += `</ul>`;
-      return html;
-    } else {
-      return `<h3>${title} (0)</h3><p>None found.</p>`;
-    }
+function renderLinksSection(title, links) {
+  let html = ""
+  if (Array.isArray(links) && links.length > 0) {
+     const sectionId = title.replace(/\s+/g, "-").toLowerCase();
+    html += `<h3>${title} (${links.length})</h3>`;
+    html += `<button onclick="toggleLinks('${sectionId}')">Show Links</button>`;
+    html += `<ul id="${sectionId}" style="display: none;">`;
+    links.forEach(link => {
+      html += `<li><a href="${link}" target="_blank">${link}</a></li>`;
+    });
+    html += `</ul>`;
+  } else {
+    html += `<h3>${title} (0)</h3><p>None found.</p>`;
   }
+
+  return html;
+}
+
+function toggleLinks(id) {
+  const element = document.getElementById(id);
+  if (element.style.display === "none") {
+    element.style.display = "block";
+  } else {
+    element.style.display = "none";
+  }
+}
+
